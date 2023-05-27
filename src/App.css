@@ -1,3 +1,10 @@
+#navbar a.active {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: #0ea5e9;
+  color: rgb(209, 213, 219);
+}
+
 .support_checkbox:checked + .support_label{
   border-color: rgb(134, 239, 172);
   color: rgb(134, 239, 172);
