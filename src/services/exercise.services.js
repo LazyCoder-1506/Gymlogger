@@ -29,4 +29,5 @@ class ExerciseDataService {
   }
 }
 
-export default new ExerciseDataService();
+const serviceObj = new ExerciseDataService();
+export default serviceObj

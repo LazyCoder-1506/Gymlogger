@@ -20,4 +20,5 @@ class WorkoutDataService {
   }
 }
 
-export default new WorkoutDataService();
+const serviceObj = new WorkoutDataService();
+export default serviceObj

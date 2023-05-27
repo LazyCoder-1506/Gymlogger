@@ -12,24 +12,26 @@ const WorkoutList = ({savedWorkout}) => {
   const [allWorkoutDetails, setAllWorkoutDetails] = useState([])
 
   useEffect(() => {
+    const fetchExerciseDetails = async () => {
+      const values = []
+      if ('workouts' in savedWorkout) {
+        for(const workout of savedWorkout.workouts) {
+          try {
+            const exerciseDoc = await ExerciseDataService.getExerciseById(workout.exerciseId)
+            const combinedData = {...workout, ...(exerciseDoc.data())}
+            values.push(combinedData)
+          } catch (err) {
+            console.log(err)
+          }
+        }
+      }
+      setAllWorkoutDetails(values)
+    }
+
     fetchExerciseDetails()
   }, [savedWorkout])
 
-  const fetchExerciseDetails = async () => {
-    const values = []
-    if ('workouts' in savedWorkout) {
-      for(const workout of savedWorkout.workouts) {
-        try {
-          const exerciseDoc = await ExerciseDataService.getExerciseById(workout.exerciseId)
-          const combinedData = {...workout, ...(exerciseDoc.data())}
-          values.push(combinedData)
-        } catch (err) {
-          console.log(err)
-        }
-      }
-    }
-    setAllWorkoutDetails(values)
-  }
+  
 
   const renderDetailsByEquipment = (workout) => {
     switch(workout.equipment) {
