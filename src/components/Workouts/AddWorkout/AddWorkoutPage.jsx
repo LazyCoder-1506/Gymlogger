@@ -168,74 +168,77 @@ const AddWorkoutPage = () => {
   }
 
   return (
-    <div className='grid grid-cols-2 gap-8'>
-      <div className='p-8'>
-        <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="select_body_part" className="text-white block mb-2">Select Body Part</label>
-            <select 
-              id='select_body_part' 
-              className='text-sm block w-full bg-gray-700 rounded border border-gray-400 focus:border-cyan-400 focus:ring-blue-500 px-3 py-2 capitalize'
-              value={bodyPart}
-              onChange={(e) => handleBodyPartSelect(e.target.value)}
-            >
-              <option selected disabled value="">Select</option>
-              {bodyParts.map((part, index) => {
-                return <option value={part} key={index}>{part}</option>
-              })}
-            </select>
-          </div>
-
-          {exercises.length ? (
-            <div>
-              <label htmlFor="select_exercise" className="text-white block mb-2">Select Exercise</label>
-              <select 
-                id='select_exercise' 
-                className='text-sm block w-full bg-gray-700 rounded border border-gray-400 focus:border-cyan-400 focus:ring-blue-500 px-3 py-2 capitalize'
-                value={selectedExerciseId}
-                onChange={(e) => setSelectedExerciseId(e.target.value)}
-                // ref={bodyPartRef}
-              >
-                <option selected disabled value="">Select</option>
-                {exercises.map((exercise, index) => {
-                  return <option value={exercise.id} key={index}>{exercise.name} ({exercise.equipment})</option>
-                })}
-              </select>
-            </div>
-          ) : ''}
-
-          <div className='mt-6'>
-            {selectedExerciseId.length > 1 ? renderInputByEquipment() : ''}
-          </div>
-
-          <div>
-            <button 
-              type="submit"
-              className='text-white text-sm bg-sky-600 hover:bg-sky-700 focus:ring focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-sky-600 rounded px-4 py-2 mt-5'
-            >
-              Add Workout
-            </button>
-          </div>
-
-        </form>
-      </div>
-      <div className="flex flex-col gap-8 p-8">
+    <div className="flex flex-col">
+      <div className="p-4 md:p-8 pb-0">
         <ReactDatePicker 
           name="date" 
           id="date" 
-          className="text-sm bg-gray-700 rounded border border-gray-400 focus:border-cyan-400 focus:ring-blue-500 px-3 py-2 mt-2"
+          className="text-sm bg-gray-700 rounded border border-gray-400 focus:border-cyan-400 focus:ring-blue-500 px-3 py-2"
           dateFormat="dd/MM/yyyy" 
           selected={selectedDate}
           value={selectedDate}
           onChange={(date) => setSelectedDate(date)}
           showPopperArrow={false}
-          // autoComplete='off'
-          // ref={nameRef}
         />
+      </div>
 
-        <WorkoutList savedWorkout={savedWorkout} />
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-8'>
+        <div className='p-4 md:p-8'>
+          <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="select_body_part" className="text-white block mb-2">Select Body Part</label>
+              <select 
+                id='select_body_part' 
+                className='text-sm block w-full bg-gray-700 rounded border border-gray-400 focus:border-cyan-400 focus:ring-blue-500 px-3 py-2 capitalize'
+                value={bodyPart}
+                onChange={(e) => handleBodyPartSelect(e.target.value)}
+              >
+                <option selected disabled value="">Select</option>
+                {bodyParts.map((part, index) => {
+                  return <option value={part} key={index}>{part}</option>
+                })}
+              </select>
+            </div>
+
+            {exercises.length ? (
+              <div>
+                <label htmlFor="select_exercise" className="text-white block mb-2">Select Exercise</label>
+                <select 
+                  id='select_exercise' 
+                  className='text-sm block w-full bg-gray-700 rounded border border-gray-400 focus:border-cyan-400 focus:ring-blue-500 px-3 py-2 capitalize'
+                  value={selectedExerciseId}
+                  onChange={(e) => setSelectedExerciseId(e.target.value)}
+                >
+                  <option selected disabled value="">Select</option>
+                  {exercises.map((exercise, index) => {
+                    return <option value={exercise.id} key={index}>{exercise.name} ({exercise.equipment})</option>
+                  })}
+                </select>
+              </div>
+            ) : ''}
+
+            <div className='mt-6'>
+              {selectedExerciseId.length > 1 ? renderInputByEquipment() : ''}
+            </div>
+
+            <div>
+              <button 
+                type="submit"
+                className='text-white text-sm bg-sky-600 hover:bg-sky-700 focus:ring focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-sky-600 rounded px-4 py-2 mt-5'
+              >
+                Add Workout
+              </button>
+            </div>
+
+          </form>
+        </div>
+        
+        <div className="flex flex-col gap-8 p-4 md:p-8">
+          <WorkoutList savedWorkout={savedWorkout} />
+        </div>
       </div>
     </div>
+    
   )
 }
 

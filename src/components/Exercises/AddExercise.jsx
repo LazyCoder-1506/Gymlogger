@@ -69,7 +69,7 @@ const AddExercise = () => {
   }
 
   return (
-    <div className='flex flex-col gap-4 p-8 text-inherit bg-inherit'>
+    <div className='flex flex-col gap-4 p-4 md:p-8 text-inherit bg-inherit'>
       <p className="text-xl text-white font-bold">Add New Exercise</p>
       <form 
         className='flex flex-col gap-3'

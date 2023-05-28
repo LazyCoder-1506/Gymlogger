@@ -20,7 +20,7 @@ const ExerciseList = () => {
   }
 
   return (
-    <div className='flex flex-col gap-4 p-8 text-inherit bg-inherit'>
+    <div className='flex flex-col gap-4 p-4 md:p-8 text-inherit bg-inherit'>
       <p className="text-xl text-white font-bold">List of Exercises
         <button className="float-right bg-gray-700 hover:bg-gray-600 rounded px-3 py-2" onClick={getExercises}>
           <FontAwesomeIcon icon={faArrowRotateRight} size='xs' />
