@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ExerciseDataService from '../../../services/exercise.services';
-
-import BarbellDetails from './BarbellDetails'
-import BodyweightDetails from './BodyweightDetails'
-import DumbbellDetails from './DumbbellDetails'
-import DurationDetails from './DurationDetails'
-import WeightDetails from './WeightDetails'
+import { renderDetailsByEquipment } from '../../../utils/commonFunctions';
 
 const WorkoutList = ({savedWorkout}) => {
 
@@ -31,30 +26,9 @@ const WorkoutList = ({savedWorkout}) => {
     fetchExerciseDetails()
   }, [savedWorkout])
 
-  
-
-  const renderDetailsByEquipment = (workout) => {
-    switch(workout.equipment) {
-      case 'Barbell':
-        return <BarbellDetails exerciseName={workout.name} equipment={workout.equipment} barbellWt={workout.barbellWt} sets={workout.sets} />
-      case 'Bodyweight':
-        return <BodyweightDetails exerciseName={workout.name} equipment={workout.equipment} sets={workout.sets} />
-      case 'Cable':
-        return <WeightDetails exerciseName={workout.name} equipment={workout.equipment} sets={workout.sets} />
-      case 'Dumbbell':
-        return <DumbbellDetails exerciseName={workout.name} equipment={workout.equipment} sets={workout.sets} />
-      case 'Duration':
-        return <DurationDetails exerciseName={workout.name} equipment={workout.equipment} sets={workout.sets} />
-      case 'Weight':
-        return <WeightDetails exerciseName={workout.name} equipment={workout.equipment} sets={workout.sets} />
-      default:
-        return ''
-    }
-  }
-
   return (
     <div className='flex flex-col gap-4'>
-      {allWorkoutDetails.map(workout => renderDetailsByEquipment(workout))}
+      {allWorkoutDetails.map(workout => renderDetailsByEquipment(workout, workout.equipment))}
     </div>
   )
 }

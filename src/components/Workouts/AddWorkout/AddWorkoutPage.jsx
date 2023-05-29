@@ -5,13 +5,14 @@ import ExerciseDataService from '../../../services/exercise.services';
 import WorkoutDataService from '../../../services/workout.services';
 
 import "react-datepicker/dist/react-datepicker.css";
-import { compareName } from '../../../utils/commonFunctions';
+import { compareName, getExerciseObjectById } from '../../../utils/commonFunctions';
 import BarbellInput from './BarbellInput';
 import DumbbellInput from './DumbbellInput';
 import BodyweightInput from './BodyweightInput';
 import DurationInput from './DurationInput';
 import WeightInput from './WeightInput';
 import WorkoutList from '../ShowWorkout/WorkoutList';
+import ExerciseDetails from '../../Exercises/ExerciseDetails';
 
 const AddWorkoutPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date())
@@ -21,6 +22,7 @@ const AddWorkoutPage = () => {
   const [selectedExerciseId, setSelectedExerciseId] = useState("")
   const [workoutDetails, setWorkoutDetails] = useState({})
   const [savedWorkout, setSavedWorkout] = useState({})
+  const [showExerciseModal, setShowExerciseModal] = useState("")
 
   useEffect(() => {
     const dateString = selectedDate.getDate() + '/' + (selectedDate.getMonth() + 1) + '/' + selectedDate.getFullYear()
@@ -37,6 +39,14 @@ const AddWorkoutPage = () => {
   const getPropertyFromExerciseId = (key) => {
     const ex = exercises.find(o => o.id === selectedExerciseId)
     return ex[key]
+  }
+
+  const handleShowModal = () => {
+    setShowExerciseModal(selectedExerciseId)
+  }
+
+  const handleDismissModal = () => {
+    setShowExerciseModal("")
   }
 
   const getExercises = async (selectedPart) => {
@@ -228,6 +238,9 @@ const AddWorkoutPage = () => {
               >
                 Add Workout
               </button>
+              {selectedExerciseId.length > 0 ? (
+                <button type='button' className="bg-gray-700 hover:bg-gray-600 rounded px-4 py-2 ml-2" onClick={handleShowModal}>Exercise Details</button>
+              ) : ''}
             </div>
 
           </form>
@@ -237,6 +250,8 @@ const AddWorkoutPage = () => {
           <WorkoutList savedWorkout={savedWorkout} />
         </div>
       </div>
+
+      {showExerciseModal.length > 0 ? <ExerciseDetails exercise={getExerciseObjectById(exercises, showExerciseModal)} dismissModal={handleDismissModal} /> : ''}
     </div>
     
   )
