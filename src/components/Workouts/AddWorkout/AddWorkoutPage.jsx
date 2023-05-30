@@ -238,8 +238,15 @@ const AddWorkoutPage = () => {
               >
                 Add Workout
               </button>
+
               {selectedExerciseId.length > 0 ? (
-                <button type='button' className="bg-gray-700 hover:bg-gray-600 rounded px-4 py-2 ml-2" onClick={handleShowModal}>Exercise Details</button>
+                <button
+                  type='button' 
+                  className="bg-gray-700 hover:bg-gray-600 rounded px-4 py-2 ml-2" 
+                  onClick={handleShowModal}
+                >
+                  Exercise Details
+                </button>
               ) : ''}
             </div>
 

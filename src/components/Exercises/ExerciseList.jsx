@@ -3,14 +3,25 @@ import ExerciseDataService from '../../services/exercise.services';
 import { bodyParts } from '../../static/data';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRotateRight } from '@fortawesome/free-solid-svg-icons';
-import { compareName } from '../../utils/commonFunctions';
+import { compareName, getExerciseObjectById } from '../../utils/commonFunctions';
+
+import ExerciseDetails from './ExerciseDetails';
 
 const ExerciseList = () => {
   const [exercises, setExercises] = useState([]);
+  const [showExerciseModal, setShowExerciseModal] = useState("")
 
   useEffect(() => {
     getExercises();
   }, []);
+
+  const handleShowModal = (exerciseId) => {
+    setShowExerciseModal(exerciseId)
+  }
+
+  const handleDismissModal = () => {
+    setShowExerciseModal("")
+  }
 
   const getExercises = async () => {
     const data = await ExerciseDataService.getAllExercises()
@@ -27,16 +38,24 @@ const ExerciseList = () => {
         </button>
       </p>
 
-      {bodyParts.map((bodyPart) => (
-        <div>
+      {bodyParts.map((bodyPart, index) => (
+        <div key={index}>
           <p className="uppercase text-white font-medium mb-1 border-b border-gray-500">{bodyPart}</p>
-          <div className="px-2 flex flex-col gap-1">
+          <div className="flex flex-col gap-1">
             {exercises.filter((exercise) => exercise.bodyPart === bodyPart).map((exercise) => (
-              <p key={exercise.id} className="text-gray font-sm">{exercise.name} <span className="italic text-gray-400">({exercise.equipment})</span></p>
+              <p 
+                key={exercise.id} 
+                className="text-gray font-sm px-2 hover:bg-slate-800 hover:cursor-pointer" 
+                onClick={() => handleShowModal(exercise.id)}
+              >
+                {exercise.name} <span className="italic text-gray-400">({exercise.equipment})</span>
+              </p>
             ))}
           </div>
         </div>
       ))}
+
+      {showExerciseModal.length > 0 ? <ExerciseDetails exercise={getExerciseObjectById(exercises, showExerciseModal)} dismissModal={handleDismissModal} /> : ''}
     </div>
   )
 }
